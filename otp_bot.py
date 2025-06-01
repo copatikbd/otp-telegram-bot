@@ -1,16 +1,37 @@
-import os
 import requests
-from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
+import time
+import os
+from dotenv import load_dotenv
+import telegram
 
-API_KEY = os.getenv("g4eFcoWUgHo8T1VDQQ==")
-CHAT_ID = os.getenv("1002535103722")
-BOT_TOKEN = os.getenv("7612118596:AAFzuo-2q_i8oxxrd6C6a8pmx4JCBJAlwRs")
+load_dotenv()
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=CHAT_ID, text="Bot is running.")
+API_KEY = os.getenv("API_KEY")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
-def run_bot():
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
-    app.run_polling()
+bot = telegram.Bot(token=BOT_TOKEN)
+
+def fetch_otps():
+    try:
+        response = requests.get("http://109.236.84.81/ints", headers={"X-API-KEY": API_KEY})
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to fetch OTPs: {response.status_code}")
+            return []
+    except Exception as e:
+        print(f"Error fetching OTPs: {e}")
+        return []
+
+sent_ids = set()
+
+while True:
+    otps = fetch_otps()
+    for otp_data in otps:
+        otp_id = otp_data.get("id")
+        if otp_id not in sent_ids:
+            message = f"🕒 Time: {otp_data.get('time')}\n⚙️ Service: {otp_data.get('service')}\n☎️ Number: {otp_data.get('number')}\n🔑 OTP: {otp_data.get('otp')}"
+            bot.send_message(chat_id=CHAT_ID, text=message)
+            sent_ids.add(otp_id)
+    time.sleep(10)
