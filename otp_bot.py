@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load from .env
 
-API_KEY = os.getenv('API_KEY')
+API_KEY = os.getenv('-g4eFcoWUgHo8T1VDQQ==')
 API_URL = 'http://109.236.84.81/ints'
-BOT_TOKEN = os.getenv('BOT_TOKEN')
-CHAT_ID = os.getenv('CHAT_ID')
+BOT_TOKEN = os.getenv('7612118596:AAFzuo-2q_i8oxxrd6C6a8pmx4JCBJAlwRs')
+CHAT_ID = os.getenv('1002535103722')
 
 bot = Bot(token=BOT_TOKEN)
 last_otp = None
