@@ -1,7 +1,0 @@
-services:
-  - type: worker
-    name: otp-telegram-bot
-    env: python
-    repo: https://github.com/your-username/your-repo-name
-    branch: main
-    startCommand: python otp_bot.py
