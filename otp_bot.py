@@ -3,9 +3,9 @@ import requests
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 
-API_KEY = os.getenv("API_KEY")
-CHAT_ID = os.getenv("CHAT_ID")
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+API_KEY = os.getenv("g4eFcoWUgHo8T1VDQQ==")
+CHAT_ID = os.getenv("1002535103722")
+BOT_TOKEN = os.getenv("7612118596:AAFzuo-2q_i8oxxrd6C6a8pmx4JCBJAlwRs")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=CHAT_ID, text="Bot is running.")
